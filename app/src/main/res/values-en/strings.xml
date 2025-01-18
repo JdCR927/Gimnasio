@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="txtFld_email">E-Mail</string>
+    <string name="txtFld_password">Password</string>
+    <string name="btn_login">Log in</string>
+    <string name="lbl_forgotPass">Forgotten your password?</string>
+    <string name="btn_register">Register</string>
+    <string name="txtFld_passwordConfirm">Repeat password</string>
+    <string name="lbl_login">Already have an account? Log in</string>
+    <string name="lbl_menu">Menu</string>
+    <string name="lbl_profile">Profile</string>
+    <string name="lbl_routine">Routine</string>
+    <string name="lbl_historic">History</string>
+    <string name="lbl_welcome">Welcome back %1$s!</string>
+    <string name="lbl_progress">Actual progress:</string>
+    <string name="btn_week">Week</string>
+    <string name="btn_month">Month</string>
+    <string name="btnimg_cardio">Cardio</string>
+    <string name="btnimg_weights">Weights</string>
+    <string name="txtFld_userName">User name</string>
+    <string name="default_username">Athlete</string>
+</resources>

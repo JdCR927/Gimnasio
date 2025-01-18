@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name" translatable="false">Fitness Workshop</string>
+    <string name="btn_login">Iniciar sesion</string>
+    <string name="txtFld_email">Correo electronico</string>
+    <string name="txtFld_password">Contraseña</string>
+    <string name="btn_register">Registrate</string>
+    <string name="lbl_forgotPass">¿Olvidaste tu contraseña?</string>
+    <string name="txtFld_passwordConfirm">Repite contraseña</string>
+    <string name="lbl_login">¿Ya tienes una cuenta? Inicia sesion</string>
+    <string name="lbl_menu">Menu</string>
+    <string name="lbl_profile">Perfil</string>
+    <string name="lbl_routine">Rutina</string>
+    <string name="lbl_historic">Historial</string>
+    <string name="lbl_welcome">¡Bienvenido de vuelta %1$s!</string>
+    <string name="lbl_progress">Progreso actual:</string>
+    <string name="btn_week">Semana</string>
+    <string name="btn_month">Mes</string>
+    <string name="btnimg_cardio">Cardio</string>
+    <string name="btnimg_weights">Pesas</string>
+    <string name="txtFld_userName">Nombre de usuario</string>
+    <string name="default_username">Deportista</string>
+</resources>

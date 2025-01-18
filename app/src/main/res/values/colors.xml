@@ -1,0 +1,6 @@
+<resources>
+    <color name="black">#000000</color> <!-- Fondo general -->
+    <color name="orange">#FF8A00</color> <!-- Botones y bordes -->
+    <color name="gray">#333333</color> <!-- Fondo de EditText -->
+    <color name="white">#FFFFFF</color> <!-- Texto blanco -->
+</resources>
