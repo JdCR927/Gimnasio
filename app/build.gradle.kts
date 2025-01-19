@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -39,6 +40,16 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.recyclerview)
+    val room_version = "2.6.1"
+    val fragment_version = "1.8.3"
+
+
+    implementation("androidx.fragment:fragment-ktx:$fragment_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

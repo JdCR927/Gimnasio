@@ -18,5 +18,5 @@
     <string name="btnimg_cardio">Cardio</string>
     <string name="btnimg_weights">Weights</string>
     <string name="txtFld_userName">User name</string>
-    <string name="default_username">Athlete</string>
+    <string name="default_username">Guest</string>
 </resources>
