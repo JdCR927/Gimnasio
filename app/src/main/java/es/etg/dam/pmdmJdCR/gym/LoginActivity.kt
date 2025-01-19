@@ -1,9 +1,13 @@
 package es.etg.dam.pmdmJdCR.gym
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.room.Room
 import es.etg.dam.pmdmJdCR.gym.RegisterActivity.Companion.database
 import es.etg.dam.pmdmJdCR.gym.data.db.UsuarioDatabase
@@ -12,12 +16,15 @@ import es.etg.dam.pmdmJdCR.gym.databinding.ActivityLoginBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.system.exitProcess
+
 
 class LoginActivity : AppCompatActivity() {
 
     companion object {
         const val DATABASE_NAME = "usuario-db"
         const val FILL_SPACE = "Por favor, rellena todos los campos."
+        const val LOCATION_REQUEST_CODE = 101
     }
 
     private lateinit var binding: ActivityLoginBinding
@@ -32,6 +39,10 @@ class LoginActivity : AppCompatActivity() {
             DATABASE_NAME
         ).build()
 
+        if(!comprobarPermiso()) {
+            pedirPermisos()
+        }
+
         binding.loginButton.setOnClickListener {
             iniciarSesion()
         }
@@ -39,6 +50,36 @@ class LoginActivity : AppCompatActivity() {
         binding.registerButton.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+
+    private fun comprobarPermiso(): Boolean {
+        return ContextCompat.checkSelfPermission(this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun pedirPermisos() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+            LOCATION_REQUEST_CODE
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                return
+            } else {
+                exitProcess(0)
+            }
         }
     }
 
