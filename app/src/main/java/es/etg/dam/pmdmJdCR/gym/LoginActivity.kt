@@ -24,7 +24,6 @@ class LoginActivity : AppCompatActivity() {
     companion object {
         const val DATABASE_NAME = "usuario-db"
         const val FILL_SPACE = "Por favor, rellena todos los campos."
-        const val LOCATION_PERMISSION_REQUIRED = "Se necesita permiso de ubicación para continuar."
         const val LOCATION_REQUEST_CODE = 101
     }
 
@@ -77,9 +76,9 @@ class LoginActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                exitProcess(0)
+                return
             } else {
-                Toast.makeText(this, LOCATION_PERMISSION_REQUIRED, Toast.LENGTH_SHORT).show()
+                exitProcess(0)
             }
         }
     }
