@@ -1,17 +1,15 @@
 package es.etg.dam.pmdmJdCR.gym
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.room.Room
-import es.etg.dam.pmdmJdCR.gym.data.UsuarioDAO
-import es.etg.dam.pmdmJdCR.gym.data.UsuarioDatabase
-import es.etg.dam.pmdmJdCR.gym.data.UsuarioEntity
+import es.etg.dam.pmdmJdCR.gym.data.db.UsuarioDatabase
+import es.etg.dam.pmdmJdCR.gym.data.db.UsuarioEntity
 import es.etg.dam.pmdmJdCR.gym.databinding.ActivityRegisterBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -31,7 +29,7 @@ class RegisterActivity : AppCompatActivity() {
             UsuarioDatabase::class.java,
             DATABASE_NAME).build()
 
-        binding.registerButton.setOnClickListener {
+        /*binding.registerButton.setOnClickListener {
             val username = binding.usernameEditText.text.toString()
 
             if (username.isNotBlank()) {
@@ -44,9 +42,9 @@ class RegisterActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("USERNAME", username)
             startActivity(intent)
-        }
+        }*/
 
-        binding.loginButton.setOnClickListener {
+        /*binding.loginButton.setOnClickListener {
             val username = binding.usernameEditText.text.toString()
 
             if (username.isNotBlank()) {
@@ -59,7 +57,7 @@ class RegisterActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             intent.putExtra("USERNAME", username)
             startActivity(intent)
-        }
+        }*/
     }
 
     fun guardar(view: View){
@@ -69,7 +67,10 @@ class RegisterActivity : AppCompatActivity() {
         val usuarioEntity = UsuarioEntity(0, usuario,correo);
         val usuarioDao = database.usuarioDao()
 
-        usuarioDao.insert(usuarioEntity)
-
+        CoroutineScope(Dispatchers.IO).launch {
+            usuarioDao.insert(usuarioEntity)
+        }
     }
+
+
 }

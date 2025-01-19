@@ -1,4 +1,4 @@
-package es.etg.dam.pmdmJdCR.gym.data
+package es.etg.dam.pmdmJdCR.gym.data.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
