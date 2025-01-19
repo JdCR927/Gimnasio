@@ -1,7 +1,8 @@
 package es.etg.dam.pmdmJdCR.gym
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import es.etg.dam.pmdmJdCR.gym.data.db.UsuarioDatabase
@@ -16,6 +17,7 @@ class RegisterActivity : AppCompatActivity() {
     companion object {
         lateinit var database: UsuarioDatabase
         const val DATABASE_NAME = "usuario-db"
+        const val FILL_SPACE = "Por favor, rellena todos los campos."
     }
 
     private lateinit var binding: ActivityRegisterBinding
@@ -25,52 +27,46 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        RegisterActivity.database =  Room.databaseBuilder(this,
+        database =  Room.databaseBuilder(this,
             UsuarioDatabase::class.java,
-            DATABASE_NAME).build()
+            DATABASE_NAME)
+        .build()
 
-        /*binding.registerButton.setOnClickListener {
-            val username = binding.usernameEditText.text.toString()
+        binding.registerButton.setOnClickListener {
+            registrar()
+        }
 
-            if (username.isNotBlank()) {
-                with(sharedPref.edit()) {
-                    putString("USERNAME", username)
-                    apply()
-                }
-            }
-
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("USERNAME", username)
-            startActivity(intent)
-        }*/
-
-        /*binding.loginButton.setOnClickListener {
-            val username = binding.usernameEditText.text.toString()
-
-            if (username.isNotBlank()) {
-                with(sharedPref.edit()) {
-                    putString("USERNAME", username)
-                    apply()
-                }
-            }
-
+        binding.loginButton.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
-            intent.putExtra("USERNAME", username)
             startActivity(intent)
-        }*/
+        }
     }
 
-    fun guardar(view: View){
-
+    private fun registrar() {
         val usuario: String = binding.usernameEditText.text.toString()
         val correo: String = binding.emailEditText.text.toString()
-        val usuarioEntity = UsuarioEntity(0, usuario,correo);
+        val pass: String = binding.passwordEditText.text.toString()
+        val confirmPass: String = binding.confirmPasswordEditText.text.toString()
+
+        if (usuario.isBlank() || correo.isBlank() || pass.isBlank() || confirmPass.isBlank()) {
+            Toast.makeText(this, FILL_SPACE, Toast.LENGTH_SHORT).show()
+            return // Detiene la ejecucion
+        }
+
+        val usuarioEntity = UsuarioEntity(0, usuario, correo)
         val usuarioDao = database.usuarioDao()
 
         CoroutineScope(Dispatchers.IO).launch {
             usuarioDao.insert(usuarioEntity)
+
+            binding.usernameEditText.text.clear()
+            binding.emailEditText.text.clear()
+            binding.passwordEditText.text.clear()
+            binding.confirmPasswordEditText.text.clear()
+
+            val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+            intent.putExtra("USERNAME", usuario)
+            startActivity(intent)
         }
     }
-
-
 }

@@ -12,6 +12,9 @@ interface UsuarioDAO {
     @Query("SELECT id, usuario, correo FROM usuario")
     suspend fun getAll(): List<UsuarioEntity>
 
+    @Query("SELECT * FROM usuario WHERE usuario = :username LIMIT 1")
+    suspend fun getUserByUsername(username: String): UsuarioEntity?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(usuario: UsuarioEntity)
 

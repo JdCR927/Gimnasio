@@ -1,13 +1,24 @@
 package es.etg.dam.pmdmJdCR.gym
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
+import es.etg.dam.pmdmJdCR.gym.RegisterActivity.Companion.database
+import es.etg.dam.pmdmJdCR.gym.data.db.UsuarioDatabase
+import es.etg.dam.pmdmJdCR.gym.data.db.UsuarioEntity
 import es.etg.dam.pmdmJdCR.gym.databinding.ActivityLoginBinding
-import es.etg.dam.pmdmJdCR.gym.databinding.ActivityMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
+
+    companion object {
+        const val DATABASE_NAME = "usuario-db"
+        const val FILL_SPACE = "Por favor, rellena todos los campos."
+    }
 
     private lateinit var binding: ActivityLoginBinding
 
@@ -16,41 +27,50 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
-
-        val savedUsername = sharedPref.getString("USERNAME", "")
-        if (!savedUsername.isNullOrEmpty()) {
-            binding.usernameEditText.setText(savedUsername)
-        }
+        database =  Room.databaseBuilder(this,
+            UsuarioDatabase::class.java,
+            DATABASE_NAME
+        ).build()
 
         binding.loginButton.setOnClickListener {
-            val username = binding.usernameEditText.text.toString()
-
-            if (username.isNotBlank()) {
-                with(sharedPref.edit()) {
-                    putString("USERNAME", username)
-                    apply()
-                }
-            }
-
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("USERNAME", username)
-            startActivity(intent)
+            iniciarSesion()
         }
 
         binding.registerButton.setOnClickListener {
-            val username = binding.usernameEditText.text.toString()
-
-            if (username.isNotBlank()) {
-                with(sharedPref.edit()) {
-                    putString("USERNAME", username)
-                    apply()
-                }
-            }
-
             val intent = Intent(this, RegisterActivity::class.java)
-            intent.putExtra("USERNAME", username)
             startActivity(intent)
         }
+    }
+
+    private fun iniciarSesion() {
+        val username = binding.usernameEditText.text.toString()
+        val password = binding.passwordEditText.text.toString()
+
+        if (username.isBlank() || password.isBlank()) {
+            Toast.makeText(this, FILL_SPACE, Toast.LENGTH_SHORT).show()
+            return // Detiene la ejecucion
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val usuarioDao = database.usuarioDao()
+            val usuario = usuarioDao.getUserByUsername(username)
+
+            if (usuario == null) {
+                usuarioNoExiste()
+            } else {
+                usuarioExiste(usuario)
+            }
+        }
+    }
+
+    private fun usuarioExiste(usuario: UsuarioEntity) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("USERNAME", usuario.usuario)
+        startActivity(intent)
+    }
+
+    private fun usuarioNoExiste() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }
