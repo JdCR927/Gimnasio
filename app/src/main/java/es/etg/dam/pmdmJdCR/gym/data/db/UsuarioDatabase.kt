@@ -1,4 +1,4 @@
-package es.etg.dam.pmdmJdCR.gym.data
+package es.etg.dam.pmdmJdCR.gym.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
