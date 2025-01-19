@@ -84,11 +84,12 @@
         android:id="@+id/forgotPasswordTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lbl_forgotPass"
-        android:textSize="14sp"
-        android:textColor="@color/orange"
-        android:layout_marginTop="15dp"
+        android:layout_below="@id/registerButton"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/registerButton" />
+        android:layout_marginTop="15dp"
+        android:onClick="fuckedUp"
+        android:text="@string/lbl_forgotPass"
+        android:textColor="@color/orange"
+        android:textSize="14sp" />
 
 </RelativeLayout>
