@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import es.etg.dam.pmdmJdCR.gym.data.recview.RecyclerViewAdapter
 import es.etg.dam.pmdmJdCR.gym.databinding.FragmentRecyclerViewBinding
 
@@ -26,7 +25,7 @@ class RecyclerViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dataList = listOf("Item 1", "Item 2", "Item 3", "Item 4")
+        val dataList = listOf("Entrenamiento 1", "Entrenamiento 2", "Entrenamiento 3", "Entrenamiento 4", "Entrenamiento 5", "Entrenamiento 6")
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = RecyclerViewAdapter(dataList)
